@@ -1,43 +1,36 @@
 import pyautogui
-import time
 import os
-
-currentDirectory = os.path.dirname(os.path.abspath(__file__))
-
-ImagePath = os.path.join(currentDirectory, 'Images', 'AcceptButton.png')
-
+def GetImagePaths():
+    ImagePaths = []
+    currentDirectory = os.path.dirname(os.path.abspath(__file__))
+    imageDirectory = os.path.join(currentDirectory, "Images")
+    for Image in os.listdir(imageDirectory):
+        if Image.endswith(".png"):
+            ImagePaths.append(os.path.join(imageDirectory, Image))
+    return ImagePaths
 
 def Capture():
-    Screenshot = pyautogui.screenshot()
-
-    return Screenshot
+    return pyautogui.screenshot()
 
 def SearchImage(Screenshot, Image):
     try:
-        Location = pyautogui.locateCenterOnScreen(Image, confidence=0.9, region=(0, 0, Screenshot.width, Screenshot.height))
+        Location = pyautogui.locateCenterOnScreen(Image, confidence=0.5, region=(0 , 0, Screenshot.width, Screenshot.height))
     except:
         Location = None
-
     return Location
 
 def AcceptGame():
-    condition = True
-
-    while condition:
+    ImagePaths = GetImagePaths()
+    while True:
         Screenshot = Capture()
-        AcceptButton = SearchImage(Screenshot, ImagePath)
-
-        if AcceptButton:
-            pyautogui.click(AcceptButton)
-            condition = False
-        else:
-            time.sleep(1)
+        for Image in ImagePaths:
+            AcceptButton = SearchImage(Screenshot, Image)
+            if AcceptButton:
+                pyautogui.click(AcceptButton)
+                return
 
 def main():
     AcceptGame()
-
     print("Game Accepted")
-
     return 0
-
 main()
