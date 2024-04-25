@@ -1,6 +1,6 @@
 # League of Legends Auto Match Acceptor (Alpha)
 
-## Only support English Clients.
+## Only support English/Spanish/Portuguese/Chinase/Corean Clients.
 
 This open source program automatically accepts match invitations in League of Legends. It supports only clients in English language. Once a match is found, it accepts it, and the program closes.
 
